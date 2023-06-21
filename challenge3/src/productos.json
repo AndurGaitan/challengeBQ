@@ -1,0 +1,20 @@
+[
+  {
+    "title": "Nike",
+    "description": "zapatillas",
+    "price": "15200",
+    "thumbnail": "https://cdn3.iconfinder.com/data/icons/sport-and-fitness-2/512/nike-512.png",
+    "code": "1234",
+    "stock": "50",
+    "id": 1
+  },
+  {
+    "title": "Adidas",
+    "description": "zapatillas adidas",
+    "price": "16200",
+    "thumbnail": "https://cdn3.iconfinder.com/data/icons/sport-and-fitness-2/512/adidas-512.png",
+    "code": "1235",
+    "stock": "50",
+    "id": 2
+  }
+]

@@ -1,4 +1,4 @@
-const fs = require('fs').promises
+import fs from 'fs/promises';
 
 class ProductManager {
   constructor(filePath) {
@@ -60,11 +60,22 @@ class ProductManager {
     return this.products;
   }
 }
+(async () => {
+  const productManager = new ProductManager('productos.json');
+  await productManager.addProduct({ title: 'Nike', description: 'zapatillas', price: '15200', thumbnail: 'https://cdn3.iconfinder.com/data/icons/sport-and-fitness-2/512/nike-512.png', code: '1234', stock: '50' });
+  await productManager.addProduct({ title: 'Adidas', description: 'zapatillas adidas', price: '16200', thumbnail: 'https://cdn3.iconfinder.com/data/icons/sport-and-fitness-2/512/adidas-512.png', code: '1235', stock: '50' })
+  console.log(productManager.getAllProducts());
+ // const product = productManager.getProductById(2);
+  //console.log(product);
+  //await productManager.removeProduct(1);
+  //console.log(productManager.getAllProducts());
+})();
 
+export default ProductManager;
 
 // Ejecucion
 
-(async () => {
+/*(async () => {
   const productManager = new ProductManager('productos.json');
   await productManager.addProduct({ title: 'Nike', description: 'zapatillas', price: '15200', thumbnail: 'https://cdn3.iconfinder.com/data/icons/sport-and-fitness-2/512/nike-512.png', code: '1234', stock: '50' });
   await productManager.addProduct({ title: 'Adidas', description: 'zapatillas adidas', price: '16200', thumbnail: 'https://cdn3.iconfinder.com/data/icons/sport-and-fitness-2/512/adidas-512.png', code: '1235', stock: '50' })
@@ -73,4 +84,4 @@ class ProductManager {
   console.log(product);
   await productManager.removeProduct(1);
   console.log(productManager.getAllProducts());
-})();
+})();*/
