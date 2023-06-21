@@ -14,6 +14,17 @@ app.get('/product', async (req, res) => {
     }
   });
 
+app.get('/product/:pid', async (req, res) => {
+    try {
+        const product = await productManager.getProductById(req.params.pid);
+        res.json(product);
+    } catch (error) {
+        console.error('Error al obtener el producto:', error);
+        res.status(500).json({ error: 'Ocurrión un error al obtener el producto.' });
+    }
+
+})
+
 app.listen(8080, () => {
     console.log('Server is running on port 8080')
 })
