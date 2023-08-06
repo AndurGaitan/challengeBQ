@@ -1,4 +1,3 @@
-// src/dao/cartManager.js
 import Cart from './models/cartModel.js';
 
 class CartManager {

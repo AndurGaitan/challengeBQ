@@ -1,4 +1,3 @@
-// src/dao/productManager.js
 import Product from './models/productModel.js';
 
 class ProductManager {

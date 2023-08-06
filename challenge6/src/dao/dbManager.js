@@ -1,4 +1,3 @@
-// src/dao/dbManager.js
 import mongoose from 'mongoose';
 
 const MONGODB_URI = 'mongodb+srv://user:hq2jjtt7lPyRE41e@clusterurl/dbname';

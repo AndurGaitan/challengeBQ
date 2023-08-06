@@ -1,4 +1,3 @@
-// src/dao/fileManager.js
 import fs from 'fs/promises';
 
 const readFile = async (filePath) => {

@@ -1,4 +1,3 @@
-// src/routes/cartRouter.js
 import express from 'express';
 import CartController from '../controllers/cartController.js';
 
