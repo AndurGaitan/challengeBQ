@@ -8,7 +8,7 @@ router.get('/', async (req, res) => {
   const queryParams = req.query;
   try {
     const products = await productController.getAllProducts(queryParams);
-    res.json(products);
+    res.render('products', {products});
   } catch (error) {
     res.status(500).json({ error: 'Error al obtener los productos' });
   }

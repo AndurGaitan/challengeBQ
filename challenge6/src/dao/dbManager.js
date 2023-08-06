@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const MONGODB_URI = 'mongodb+srv://user:hq2jjtt7lPyRE41e@clusterurl/dbname';
+const MONGODB_URI = 'mongodb+srv://adminEcommerce:2Whn48RR66OEm8gv@cluster0.jwe0tnc.mongodb.net/';
 
 const connectDB = async () => {
   try {

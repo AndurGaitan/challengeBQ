@@ -1,4 +1,4 @@
-// src/app.js
+import handlebars from 'express-handlebars'
 import express from 'express';
 import path from 'path';
 import dotenv from 'dotenv';
@@ -41,8 +41,9 @@ app.get('/chat', (req, res) => {
 });
 
 // Configuración del motor de plantillas Handlebars
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'handlebars');
+app.engine('handlebars', handlebars.engine())
+app.set('views', __dirname + '/views')
+app.set('view engine', 'handlebars')
 
 // Carpeta pública
 app.use(express.static(path.join(__dirname, 'public')));
