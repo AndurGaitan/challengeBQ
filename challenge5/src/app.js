@@ -5,7 +5,7 @@ import productRouter from './routes/product.router.js'
 import cartRouter from './routes/cart.router.js'
 import viewsRouter from './routes/views.router.js'
 import __dirname from './utils.js'
-import ProductManager from './dao/fileMananger/product.manager.js'
+import ProductManager from './manager/product.manager.js'
 import mongoose from 'mongoose'
 
 const app = express()
@@ -27,19 +27,19 @@ const dbName = 'ecommercePruebaRealTime'
 mongoose.connect(uri, {dbName})
      .then(() => {
         console.log('DB CONNECTED')
-        const httpServer = app.listen(3000, () => {console.log('servidor escuchando en el puerto 8080')})
-        const io = new Server(httpServer)
-
-        io.on('connection', socket => {
-          socket.on('new-product',async data => {
-          const productManager = new ProductManager()
-          await productManager.create(data)
-
-          const products = await productManager.list()
-          io.emit('reload-form', products)
-          console.log(data)
-    })
-})
      })
      .catch(e => console.log(e))
 
+const httpServer = app.listen(3000, () => {console.log('servidor escuchando en el puerto 8080')})
+const io = new Server(httpServer)
+
+io.on('connection', socket => {
+    socket.on('new-product',async data => {
+        const productManager = new ProductManager()
+        await productManager.create(data)
+
+        const products = await productManager.list()
+        io.emit('reload-form', products)
+        console.log(data)
+    })
+})
