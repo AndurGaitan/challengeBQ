@@ -58,13 +58,4 @@ router.get('/profile', auth, (req, res) => {
     res.render('profile', user)
 })
 
-router.get('/logout', (req, res) => {
-    req.session.destroy((err) => {
-        if (err) {
-            console.log(err);
-        }
-        res.redirect('/api/session/login');
-    })
-})
-
 export default router
