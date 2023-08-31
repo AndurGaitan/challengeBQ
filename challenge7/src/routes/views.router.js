@@ -1,12 +1,17 @@
 import { Router } from "express";
-import ProductManager from '../dao/fileMananger/product.manager.js'
-import productsModel from "../dao/mongoManager/models/product.model.js";
+import ProductManager from '../dao/fileManager/product.manager.js'
+import productsModel from "../dao/mongo/models/product.model.js";
 
 const router = Router()
 const productManager = new ProductManager()
 
 
-router.get('/', async (req, res) => {
+router.get('/', (req, res) => {
+    res.render('login', {})
+})
+
+
+router.get('/products', async (req, res) => {
     const products = await productManager.list()
     res.render('products', { products })
 })
@@ -45,7 +50,7 @@ router.post('/form-products', async (req, res) => {
     const data = req.body
     const result = await productManager.create(data)
 
-    res.redirect('/')
+    res.redirect('/products')
 })
 
 export default router

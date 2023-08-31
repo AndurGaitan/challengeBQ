@@ -1,0 +1,73 @@
+<h2>Este es products_ real time</h2>
+<h3>Enter product</h3>
+
+<form id='myForm'>
+    Name: <input type="text" name="name">
+    <br>
+    Price: <input type="number" name="price">
+    <br>
+    <button type="submit">Enviar</button>
+</form>
+
+
+<hr>
+
+<div class="card" style="width: 18rem;">
+  <img src="..." class="card-img-top" alt="...">
+  <div class="card-body">
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+  </div>
+</div>
+
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <td>ID</td>
+            <td>Name</td>
+            <td>Price</td>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each products}}
+            <tr>
+                <td>{{this.id}}</td>
+                <td>{{this.name}}</td>
+                <td>{{this.price}}</td>
+            </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    const socket = io()
+
+    document.getElementById('myForm').onsubmit = e => {
+        e.preventDefault()
+
+        const name = document.querySelector('input[name=name]').value
+        const price = parseInt(document.querySelector('input[name=price]').value)
+
+        const product = { name, price }
+        socket.emit('new-product', product)
+
+    }
+
+    socket.on('reload-table', products => {
+        console.log(products)
+        const tbody = document.getElementById('tbody')
+
+            let html = '';
+            products.forEach(product => {
+                html += `<tr>
+                        <td>${product.id}</td>
+                        <td>${product.name}</td>
+                        <td>${product.price}</td>
+                        </tr>
+                
+                `
+            })
+            tbody.innerHTML = html
+    })
+
+</script>
