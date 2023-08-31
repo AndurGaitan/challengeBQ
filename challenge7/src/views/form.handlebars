@@ -1,13 +1,20 @@
 <h2>Create Product</h2>
-<a href="/">Product List</a>
 
-<form action="/form-products" method="post">
-    Name: <input type="text" name="name">
+<form action="/api/products/form" method="post">
+    Title: <input type="text" name="title">
     <br>
     Price: <input type="number" name="price">
     <br>
-    img: <input type="text" name="img">
+    thumbnails: <input type="text" name="thumbnails">
     <br>
     description: <input type="text" name="description">
+    <br>
+    code: <input type="text" name="code">
+     <br>
+    status: <input type="text" name="status">
+    <br>
+    stock: <input type="number" name="stock">
+    <br>
+    category: <input type="text" name="category">
     <button type="submit">Enviar</button>
 </form>

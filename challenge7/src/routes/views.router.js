@@ -13,7 +13,7 @@ router.get('/', (req, res) => {
 
 router.get('/products', async (req, res) => {
     const products = await productManager.list()
-    res.render('products', { products })
+    res.render('products', { products})
 })
 
 
