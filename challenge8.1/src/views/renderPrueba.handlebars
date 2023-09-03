@@ -1,0 +1,39 @@
+<h2>Products List Prueba</h2>
+<div class="row">
+<h2>Create Product</h2>
+
+<form action="/api/products/form" method="post">
+    Title: <input type="text" name="title">
+    <br>
+    Description: <input type="text" name="description">
+    <br>
+    Code: <input type="text" name="code">
+    <br>
+    Price: <input type="number" name="price">
+    <br>
+    Stock: <input type="text" name="stock">
+    <br>
+    category: <input type="text" name="category">
+    <br>
+    thumbnails: <input type="text" name="thumbnails">
+    <br>
+    <button type="submit">Enviar</button>
+</form>
+</div>
+<div class="row">
+{{#each result}}
+<div class="col-sm">
+<div class="card" style="width: 18rem;">
+  <img src="{{this.img}}" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">{{this.title}}</h5>
+    <p class="card-text">{{this.description}}</p>
+    <p class="card-text">{{this.price}}</p> 
+    <p class="card-text">{{this.stock}}</p>    
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+    <button class="delete btn btn-danger">x</button>
+  </div>
+</div>
+</div>
+{{/each}}
+</div>
