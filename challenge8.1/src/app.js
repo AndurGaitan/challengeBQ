@@ -58,7 +58,7 @@ app.use('/api/session', userRouter)
 mongoose.connect(uri, {dbName})
      .then(() => {
         console.log('DB CONNECTED')
-        const httpServer = app.listen(3000, () => {console.log('servidor escuchando en el puerto 8080')})
+        const httpServer = app.listen(8080, () => {console.log('servidor escuchando en el puerto 8080')})
         const io = new Server(httpServer)
 
         io.on('connection', socket => {
