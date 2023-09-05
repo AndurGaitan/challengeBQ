@@ -8,6 +8,7 @@ import __dirname from './utils.js'
 import ProductManager from './dao/fileMananger/product.manager.js'
 import mongoose from 'mongoose'
 import UserModel from './dao/mongoManager/models/user.model.js'
+import messagesModel from './dao/mongoManager/models/messages.model.js'
 
 
 const app = express()
