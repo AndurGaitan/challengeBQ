@@ -40,6 +40,12 @@ mongoose.connect(uri, {dbName})
           const products = await productManager.list()
           io.emit('reload-form', products)
           console.log(data)
+          socket.on('new-message', async (newMessage) => { 
+               try { 
+                   const message = await messagesModel.create(newMessage); 
+                   socketServer.emit('mensajeGeneral', message); 
+                   } catch (error) { console.error('Error al guardar el mensaje:', error); 
+           } }); 
     })
 })
      })

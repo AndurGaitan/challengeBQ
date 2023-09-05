@@ -12,6 +12,7 @@ import MongoStore from 'connect-mongo'
 import userRouter from './routes/session.router.js'
 import passport from 'passport'
 import initializePassport from './config/passport.config.js'
+import messagesModel from './dao/mongo/models/message.model.js'
 
 const app = express()
 app.use(express.urlencoded({extended: true}))
@@ -69,7 +70,18 @@ mongoose.connect(uri, {dbName})
           const products = await productManager.list()
           io.emit('reload-form', products)
           console.log(data)
+          socket.on('new-message', async (newMessage) => { 
+            try { 
+                const message = await messagesModel.create(newMessage); 
+                socketServer.emit('mensajeGeneral', message); 
+                console.log(message)
+                } catch (error) { console.error('Error al guardar el mensaje:', error); 
+        } }); 
+
     })
 })
      })
      .catch(e => console.log(e))
+
+
+

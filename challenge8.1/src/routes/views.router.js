@@ -1,6 +1,7 @@
 import { Router } from "express";
 import ProductManager from '../dao/fileManager/product.manager.js'
 import productsModel from "../dao/mongo/models/product.model.js";
+import messagesModel from "../dao/mongo/models/message.model.js";
 
 const router = Router()
 const productManager = new ProductManager()
@@ -9,6 +10,14 @@ const productManager = new ProductManager()
 router.get('/', (req, res) => {
     res.render('login', {})
 })
+
+router.get('/chat', async (req, res) => { try { // Obtener todos los mensajes de la base de datos 
+    const messages = await messagesModel.find(); // Renderizar la vista 'chat' y pasar los mensajes como datos 
+    res.render('chat', { messages }); 
+} catch (error) { console.error('Error al obtener los mensajes:', error); // En caso de error, enviar una respuesta de error al cliente 
+    res.status(500).send('Error al obtener los mensajes del chat'); 
+   } 
+});
 
 
 router.get('/products', async (req, res) => {
