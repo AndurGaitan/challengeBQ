@@ -4,7 +4,9 @@ import UserModel from "../dao/mongo/models/users.model.js";
 import passport from 'passport';
 
 const router = Router()
-router.get('/', (req, res) => {res.send('OK')})
+router.get('/', (req, res) => {
+    res.render('home', {})
+})
 
 router.get('/login', (req, res) => {
     res.render('login', {})
@@ -48,5 +50,23 @@ router.get('/logout', (req, res) => {
         res.redirect('/api/session/login');
     })
 })
+
+//GITHUB
+router.get(
+    '/login-github',
+    passport.authenticate('github', {scope: ['user:email'] }),
+    async(req, res) => {}
+)
+
+router.get(
+    '/githubcallback',
+    passport.authenticate('github', { failureRedirect: '/'}),
+    async(req, res) => {
+        console.log('Callback: ', req.user)
+        req.session.user = req.user
+        console.log(req.session)
+        res.redirect('/api/session/profile')
+    }
+)
 
 export default router

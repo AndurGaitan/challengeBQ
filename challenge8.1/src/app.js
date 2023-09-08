@@ -18,6 +18,7 @@ const app = express()
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
 
+app.use('/static', express.static( __dirname + '/public'))
 app.engine('handlebars', handlebars.engine())
 app.set('views', __dirname + '/views')
 app.set('view engine', 'handlebars')
@@ -53,6 +54,9 @@ app.use('/', viewsRouter)
 app.use('/api/products', productRouter)
 app.use('/api/carts', cartRouter)
 app.use('/api/session', userRouter)
+app.get('/admin', checkRole('admin'), (req, res) => {
+    res.render('adminPanel');
+  });
 
 
 

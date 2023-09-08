@@ -11,14 +11,13 @@ router.get('/', (req, res) => {
     res.render('login', {})
 })
 
-router.get('/chat', async (req, res) => { try { // Obtener todos los mensajes de la base de datos 
-    const messages = await messagesModel.find(); // Renderizar la vista 'chat' y pasar los mensajes como datos 
+router.get('/chat', async (req, res) => { try {  
+    const messages = await messagesModel.find().lean();  
     res.render('chat', { messages }); 
-} catch (error) { console.error('Error al obtener los mensajes:', error); // En caso de error, enviar una respuesta de error al cliente 
+} catch (error) { console.error('Error al obtener los mensajes:', error);  
     res.status(500).send('Error al obtener los mensajes del chat'); 
    } 
 });
-
 
 router.get('/products', async (req, res) => {
     const products = await productManager.list()

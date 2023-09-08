@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const UserModel = mongoose.model('users', mongoose.Schema({
     email: {
-        type: Stryng,
+        type: String,
         unique: true
     },
     password: String,

@@ -1,7 +1,6 @@
 <h1>bienvenido {{name}}</h1>
 <a href="/api/session/logout">LOGOUT</a>
-<h2>Products</h2>
-<a href="/api/products/form">create products</a>
+<h1>Productos</h1> 
 <div class="row">
 {{#each products}}
 <div class="col-sm">
@@ -10,8 +9,8 @@
   <div class="card-body">
     <h5 class="card-title">{{this.title}}</h5>
     <p class="card-text">{{this.description}}</p>
-    <p class="card-text">{{this.price}}</p>    
-    <a href="#" class="btn btn-primary">Go somewhere</a>
+    <p class="card-text">{{this.price}}</p>  
+    <button class="btn btn-primary" onclick="addToCart('{{_id}}')">Agregar al carrito</button>   
     <button class="delete btn btn-danger">x</button>
   </div>
 </div>

@@ -1,12 +1,43 @@
 import passport from 'passport'
 import local from 'passport-local'
 import UserModel from '../dao/mongo/models/users.model.js'
+import GitHubStrategy from 'passport-github2'
 import { createHash, isValidPassword } from '../utils.js'
 
 const LocalStrategy = local.Strategy
-
+// App ID: 385349
+// Client ID: Iv1.6fae08462438548f
+//secret:ba0d8672146c76b53dfd358d5c1f59844cc395fd
 const initializePassport = () => {
+    //Iniciar sesion con git hub
+    passport.use('github', new GitHubStrategy(
+        {
+            clientID: 'Iv1.6fae08462438548f',
+            clientSecret: 'ba0d8672146c76b53dfd358d5c1f59844cc395fd',
+            callbackURL: 'http://localhost:8080/githubcallback'
+        },
+        async (accessToken, refreshToken, profile, done) => {
+            console.log(profile)
 
+            try  {
+                const user = await UserModel.findOne({ email: profile._json.email  })
+                if(user) {
+                    console.log('User already exits ' + email)
+                    return done(null, user)
+                }
+
+                const newUser = {
+                    name: profile._json.name,
+                    email:  profile._json.email,
+                    password: ''
+                }
+                const result = await UserModel.create(newUser)
+                return done(null, result)
+            } catch(e) {
+                return done('Error to login wuth github' + e)
+            }
+        }
+    ))
     // register Es el nomber para Registrar con Local - el 'registro' nos servira como midelware
     passport.use('register', new LocalStrategy(
         //Local stategy recibe dor argumentos

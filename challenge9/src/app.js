@@ -12,11 +12,13 @@ import MongoStore from 'connect-mongo'
 import userRouter from './routes/session.router.js'
 import passport from 'passport'
 import initializePassport from './config/passport.config.js'
+import messagesModel from './dao/mongo/models/message.model.js'
 
 const app = express()
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
 
+app.use('/static', express.static( __dirname + '/public'))
 app.engine('handlebars', handlebars.engine())
 app.set('views', __dirname + '/views')
 app.set('view engine', 'handlebars')
@@ -58,7 +60,7 @@ app.use('/api/session', userRouter)
 mongoose.connect(uri, {dbName})
      .then(() => {
         console.log('DB CONNECTED')
-        const httpServer = app.listen(3000, () => {console.log('servidor escuchando en el puerto 8080')})
+        const httpServer = app.listen(8080, () => {console.log('servidor escuchando en el puerto 8080')})
         const io = new Server(httpServer)
 
         io.on('connection', socket => {
@@ -69,7 +71,18 @@ mongoose.connect(uri, {dbName})
           const products = await productManager.list()
           io.emit('reload-form', products)
           console.log(data)
+          socket.on('new-message', async (newMessage) => { 
+            try { 
+                const message = await messagesModel.create(newMessage); 
+                socketServer.emit('mensajeGeneral', message); 
+                console.log(message)
+                } catch (error) { console.error('Error al guardar el mensaje:', error); 
+        } }); 
+
     })
 })
      })
      .catch(e => console.log(e))
+
+
+
