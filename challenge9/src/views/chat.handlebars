@@ -2,7 +2,8 @@
 <div id="chat-container"> 
     {{#each messages}} 
        <div class="message"> 
-           <span class="user">{{this.user}}</span>: {{this.message}} 
+           <span class="user">{{this.user}}</span>: 
+           {{this.message}} 
        </div> 
     {{/each}} 
 </div>
@@ -22,7 +23,7 @@
 socket.on('mensajeGeneral', (data) => { 
     const newMessage = document.createElement('div'); 
     newMessage.classList.add('message');  
-    newMessage.innerHTML = `<span class="user">y diai${data.user}</span>: ${data.message}`; 
+    newMessage.innerHTML = `<span class="user">${data.user}</span>: ${data.message}`; 
     chatContainer.appendChild(newMessage); 
     });
 

@@ -64,6 +64,7 @@ mongoose.connect(uri, {dbName})
         const io = new Server(httpServer)
 
         io.on('connection', socket => {
+          console.log(socket.id)
           socket.on('new-product',async data => {
           const productManager = new ProductManager()
           await productManager.create(data)
@@ -71,13 +72,16 @@ mongoose.connect(uri, {dbName})
           const products = await productManager.list()
           io.emit('reload-form', products)
           console.log(data)
+          //Message
           socket.on('new-message', async (newMessage) => { 
             try { 
                 const message = await messagesModel.create(newMessage); 
                 socketServer.emit('mensajeGeneral', message); 
                 console.log(message)
-                } catch (error) { console.error('Error al guardar el mensaje:', error); 
-        } }); 
+                } catch (error) { 
+                    console.error('Error al guardar el mensaje:', error); 
+                } 
+            }); 
 
     })
 })

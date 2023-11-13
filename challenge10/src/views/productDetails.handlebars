@@ -1,0 +1,17 @@
+
+
+<section class="container-product_details">
+    <div class="container-image">
+        <article>
+            <img src="{{productDetails.thumbnails}}" alt="">
+        </article>
+    </div>
+    <div class="container-description">
+        <h2>{{productDetails.title}}</h2>
+        <p class="description">{{productDetails.description}}</p>
+        <p class="category">Categoria: {{productDetails.category}}</p>
+        <p class="price">${{productDetails.price}}</p>
+        <button type="button" id="addToCartBtn" onclick="addToCart('{{productDetails._id}}')">Agregar al carrito</button>
+    </div>
+</section>
+<script src="/js/products.js"></script>
