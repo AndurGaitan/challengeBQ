@@ -22,7 +22,7 @@ export default class Product {
     create = async (product) => {
         try{
             return await ProductModel.create(product)            
-        } catch {
+        } catch (error){
             throw new Error(`Error al guardar el producto ${error.message}`)
         }
         

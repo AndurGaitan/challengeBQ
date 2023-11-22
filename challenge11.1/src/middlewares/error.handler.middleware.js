@@ -1,14 +1,12 @@
-// En un nuevo archivo middlewares/error-handler.middleware.js
-
 function errorHandler(err, req, res, next) {
-    console.error(err.stack);
-  
-    const statusCode = res.statusCode === 200 ? 500 : res.statusCode;
-    res.status(statusCode).json({
-      message: err.message,
-      stack: process.env.NODE_ENV === 'production' ? 'Error en producción' : err.stack,
-    });
-  }
-  
-  export default errorHandler;
-  
+  console.error(err.stack);
+
+  const statusCode = err.status || 500;
+  const message = err.message || 'Internal Server Error';
+
+  res.status(statusCode).json({
+    message,
+  });
+}
+
+export default errorHandler;

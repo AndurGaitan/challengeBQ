@@ -62,9 +62,14 @@ export const getProductById = async(req, res) => {
 }
 
 export const createProduct = async(req, res) => {
-    const object = req.body
+    try{
+        const object = req.body
 
-    return res.json(await productService.create(object))
+        return res.json(await productService.create(object))
+    } catch(error) {
+        next(error);
+    }
+    
 }
 
 export const updateProduct = async(req, res) => {

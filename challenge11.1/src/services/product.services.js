@@ -15,7 +15,7 @@ export default class ProductService {
         try {
             return await ProductDao.create(object)
         } catch (error) {
-            return {}
+            throw error;
         }
     }
 
