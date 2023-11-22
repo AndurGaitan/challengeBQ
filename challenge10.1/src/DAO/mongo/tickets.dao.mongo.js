@@ -21,7 +21,7 @@ export default class Ticket {
 
   getById = async(code) => {
     try {
-      return await TicketModel.findOne({ code });
+      return await TicketModel.findById(code);
     } catch (error) {
       throw error;
     }
@@ -29,7 +29,7 @@ export default class Ticket {
 
   update = async(code, ticketData) => {
     try {
-      return await TicketModel.findOneAndUpdate({ code }, ticketData, { new: true });
+      return await TicketModel.findByIdAndDelete( code , ticketData, { new: true });
     } catch (error) {
       throw error;
     }
@@ -38,7 +38,7 @@ export default class Ticket {
 
   delete = async(code) => {
     try {
-      return await TicketModel.findOneAndRemove({ code });
+      return await TicketModel.findByIdAndDelete(code);
     } catch (error) {
       throw error;
     }
