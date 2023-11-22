@@ -18,7 +18,7 @@ switch (config.persistence) {
             .catch((e) => {throw 'DB can not connected'})
 
         const { default: UserMongo } = await import('./mongo/user.dao.mongo.js')
-        const { default: ProductMongo } = await import('./mongo/productsposta.dao.mongo.js')
+        const { default: ProductMongo } = await import('./mongo/products.dao.mongo.js')
         const { default: CartMongo } = await import('./mongo/carts.dao.mongo.js')
         const { default: TicketMongo } = await import('./mongo/tickets.dao.mongo.js')
 

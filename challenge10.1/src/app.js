@@ -1,18 +1,21 @@
 import express from 'express'
 import config from './config/config.js'
 import sessionRouter from './routes/session.router.js'
+import { Server } from 'socket.io';
 import productsRouter from './routes/product.router.js'
 import cartsRouter from './routes/cart.router.js'
 import ticketsRouter from './routes/tickets.router.js'
 import initializePassport from './config/passport.config.js'
 import passport from 'passport'
 import session from 'express-session'
+import handlebars from 'express-handlebars'
+//import viewRouter from './routes/view.router.js'
 
 const app = express()
 app.use(express.json())
 app.use(express.urlencoded({extended: true}));
 
-app.use(express.static(__dirname + '/public'))
+//app.use(express.static(__dirname + '/public'))
 
 
 app.use(session({
@@ -25,17 +28,17 @@ initializePassport()
 app.use(passport.initialize())
 
 // Configurar handlebars
-app.engine('handlebars', handlebars.engine());
-app.set('views', __dirname + '/views')
-app.set('view engine', 'handlebars')
+// app.engine('handlebars', handlebars.engine());
+// app.set('views', __dirname + '/views')
+// app.set('view engine', 'handlebars')
 
 app.use('/api/products', productsRouter)
 app.use('/api/carts', cartsRouter)
 app.use('/api/tickets', ticketsRouter)
 app.use('/session', sessionRouter)
-app.use(viewRouter)
+//app.use(viewRouter)
 
-const httpServer = app.listen(port, ()=> console.log(`Server Up ${port}`));
+const httpServer = app.listen(8080, ()=> console.log('Servidor corriendo en el puerto 8080'));
 const io = new Server(httpServer)
 
 // Configurar socket del lado del servidor

@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
-import {products} from "../models/products.model.js"
+import { cartCollection } from "../constants/constants.js";
+import { productCollection } from "../constants/constants.js";
 
-const cartModel = mongoose.model('carts', new mongoose.Schema({
+const cartSchema = new mongoose.Schema({
     
     products:[
         {
@@ -17,11 +18,13 @@ const cartModel = mongoose.model('carts', new mongoose.Schema({
             },
         }
     ],
-}))
+})
 
-cartModel.pre(['find','findOne'], function(){
-    this.populate(`${products}.product`)
+cartSchema.pre(['find','findOne'], function(){
+    this.populate(`${productCollection}.product`)
 })
 
 
-export default cartModel;
+const CartModel = mongoose.model(cartCollection, cartSchema);
+
+export default CartModel;

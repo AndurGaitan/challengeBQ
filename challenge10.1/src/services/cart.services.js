@@ -2,6 +2,8 @@ import { Cart } from '../DAO/factory.js'
 
 const CartDao = new Cart()
 
+export default class CartService{
+
 getCartById = async(cid) => {
     return await CartDao.getById(cid)
 }
@@ -28,5 +30,7 @@ updateProductQuantityInCart = async(cid, pid, quantity) => {
 
 removeAllProducts = async(cid) => {
     return await CartDao.removeAllProducts(cid)
+
+}
 
 }
