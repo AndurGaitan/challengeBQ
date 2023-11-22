@@ -3,6 +3,7 @@ import config from './config/config.js'
 import sessionRouter from './routes/session.router.js'
 import productsRouter from './routes/product.router.js'
 import cartsRouter from './routes/cart.router.js'
+import ticketsRouter from './routes/tickets.router.js'
 import initializePassport from './config/passport.config.js'
 import passport from 'passport'
 import session from 'express-session'
@@ -30,6 +31,7 @@ app.set('view engine', 'handlebars')
 
 app.use('/api/products', productsRouter)
 app.use('/api/carts', cartsRouter)
+app.use('/api/tickets', ticketsRouter)
 app.use('/session', sessionRouter)
 app.use(viewRouter)
 

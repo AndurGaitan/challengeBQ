@@ -1,55 +1,56 @@
-import TicketsDaoMongo from '../DAO/mongo/tickets.dao.mongo.js0';
 import TicketDTO from '../DTO/tickets.dto.js';
+import {Ticket} from '../DAO/factory.js'
 
-class TicketsService {
-  static async createTicket(ticketData) {
+const TicketDao = new Ticket()
+
+export default class TicketsService {
+  create = async(objet) => {
     try {
       const newTicketDTO = new TicketDTO(
-        ticketData.name,
-        ticketData.description,
-        ticketData.code,
-        ticketData.purchase_datetime,
-        ticketData.amount,
-        ticketData.purchaser
+        objet.name,
+        objet.description,
+        objet.code,
+        objet.purchase_datetime,
+        objet.amount,
+        objet.purchaser
       );
 
-      return await TicketsDaoMongo.createTicket(newTicketDTO);
+      return await TicketDao.create(newTicketDTO);
+    } catch (error) {
+      throw error;
+    }
+  }
+  get = async() => {
+    try {
+      return await TicketDao.get();
+    } catch (error) {
+      throw error;
+    }
+
+  }
+
+  getById = async(code) => {
+    try {
+      return await TicketDao.getById(code);
+    } catch (error) {
+      throw error;
+    }
+
+  }
+
+  update = async(code, ticketData) => {
+    try {
+      return await TicketDao.update(code, ticketData);
     } catch (error) {
       throw error;
     }
   }
 
-  static async getAllTickets() {
+  delete = async(code) => {
     try {
-      return await TicketsDaoMongo.getAllTickets();
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  static async getTicketByCode(code) {
-    try {
-      return await TicketsDaoMongo.getTicketByCode(code);
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  static async updateTicketByCode(code, ticketData) {
-    try {
-      return await TicketsDaoMongo.updateTicketByCode(code, ticketData);
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  static async deleteTicketByCode(code) {
-    try {
-      return await TicketsDaoMongo.deleteTicketByCode(code);
+      return await TicketDao.delete(code);
     } catch (error) {
       throw error;
     }
   }
 }
-
-export default TicketsService;

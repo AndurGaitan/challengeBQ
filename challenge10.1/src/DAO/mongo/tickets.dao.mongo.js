@@ -1,46 +1,51 @@
 import TicketModel from './models/tickets.model.js';
 
-class TicketsDaoMongo {
-  static async createTicket(ticketData) {
+export default class Ticket {
+  create = async(ticketData) =>{
     try {
-      const newTicket = new Ticket(ticketData);
+      const newTicket = new TicketModel(ticketData);
       return await newTicket.save();
     } catch (error) {
       throw error;
     }
-  }
 
-  static async getAllTickets() {
+  }
+  
+  get = async() => {
     try {
-      return await Ticket.find();
+      return await TicketModel.find();
     } catch (error) {
       throw error;
     }
   }
 
-  static async getTicketByCode(code) {
+  getById = async(code) => {
     try {
-      return await Ticket.findOne({ code });
+      return await TicketModel.findOne({ code });
     } catch (error) {
       throw error;
     }
   }
 
-  static async updateTicketByCode(code, ticketData) {
+  update = async(code, ticketData) => {
     try {
-      return await Ticket.findOneAndUpdate({ code }, ticketData, { new: true });
+      return await TicketModel.findOneAndUpdate({ code }, ticketData, { new: true });
+    } catch (error) {
+      throw error;
+    }
+
+  }
+
+  delete = async(code) => {
+    try {
+      return await TicketModel.findOneAndRemove({ code });
     } catch (error) {
       throw error;
     }
   }
 
-  static async deleteTicketByCode(code) {
-    try {
-      return await Ticket.findOneAndRemove({ code });
-    } catch (error) {
-      throw error;
-    }
-  }
 }
 
-export default TicketsDaoMongo;
+ 
+
+
