@@ -1,82 +1,45 @@
-import express from 'express';
-import __dirname from './utils.js';
-import handlebars from 'express-handlebars';
+import express from 'express'
+import config from './config/config.js'
+import sessionRouter from './routes/session.router.js'
 import { Server } from 'socket.io';
-import {productRouter} from './routes/product.routes.js';
-import {cartRouter} from './routes/carts.routes.js';
-import { viewRouter } from './routes/view.routes.js';
-import ProductManager from './dao/fileSystem/controllers/controllers/ProductManager.js';
-import { MessageMongoManager } from './dao/mongo/MessageMongoManager.js';
-import { ProductMongoManager } from './dao/mongo/ProductMongoManager.js';
-import { config } from './config/config.js';
-import { connectDb } from './config/dbConnection.js';
-import session from 'express-session';
-import MongoStore from 'connect-mongo';
-import { sessionsRouter } from './routes/sessions.routes.js';
-import { initializePassport } from './config/passportConfig.js';
-import passport from 'passport';
+import productsRouter from './routes/product.router.js'
+import cartsRouter from './routes/cart.router.js'
+import ticketsRouter from './routes/tickets.router.js'
+import initializePassport from './config/passport.config.js'
+import passport from 'passport'
+import session from 'express-session'
+import handlebars from 'express-handlebars'
+//import viewRouter from './routes/view.router.js'
 
-
-
-// Manager de Mongo
-const messageManager = new MessageMongoManager()
-const productMongo = new ProductMongoManager();
-
-// Manager de fileSystem
-const product = new ProductManager()
-
-
-// genera los datos para crear el servidor
 const app = express()
-const port = config.server.port || 8080;
-
-
-// Conexion a la base de datos
-connectDb();
-
-
-// Configurar express para que pueda entender los datos json y formulario
-app.use(express.json());
+app.use(express.json())
 app.use(express.urlencoded({extended: true}));
 
-// Configurar carpeta public
-app.use(express.static(__dirname + '/public'))
+//app.use(express.static(__dirname + '/public'))
 
-// Configuracion de sessions
+
 app.use(session({
-    store:MongoStore.create({
-        mongoUrl: config.mongo.url
-    }),
-    secret: config.server.secretSession,
+    secret: 'secre6t',
     resave: true,
     saveUninitialized: true
-}));
+}))
 
-// Configuracion de passport
-initializePassport();
-app.use(passport.initialize());
-app.use(passport.session());
-
-
+initializePassport()
+app.use(passport.initialize())
 
 // Configurar handlebars
-app.engine('handlebars', handlebars.engine());
-app.set('views', __dirname + '/views')
-app.set('view engine', 'handlebars')
+// app.engine('handlebars', handlebars.engine());
+// app.set('views', __dirname + '/views')
+// app.set('view engine', 'handlebars')
 
+app.use('/api/products', productsRouter)
+app.use('/api/carts', cartsRouter)
+app.use('/api/tickets', ticketsRouter)
+app.use('/session', sessionRouter)
+//app.use(errorHandler)
+//app.use(viewRouter)
 
-// Configurar rutas de express
-app.use('/api/products', productRouter);
-app.use('/api/carts', cartRouter);
-app.use(viewRouter)
-app.use('/api/sessions', sessionsRouter)
-
-
-
-
-// Como abastraer el socket IO 
-// Configurar servidor
-const httpServer = app.listen(port, ()=> console.log(`Server Up ${port}`));
+const httpServer = app.listen(8080, ()=> console.log('Servidor corriendo en el puerto 8080'));
 const io = new Server(httpServer)
 
 // Configurar socket del lado del servidor
