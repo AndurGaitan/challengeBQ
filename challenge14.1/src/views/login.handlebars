@@ -1,0 +1,20 @@
+{{message}}
+
+{{error}}
+{{#if user}}
+    <p>Ya inciaste sesion</p>
+{{else}}
+<div class="container-form">
+
+<form method="post" action="/api/sessions/login" >
+    <h1>login</h1>
+    <input type="email" name="email" placeholder="Correo electronico" >
+    <br>
+    <input type="password" name="password" placeholder="Contraseña" >
+    <button>Iniciar sesion</button>
+</form>
+<div class="container-social_networks">
+    <a href="/api/sessions/loginGithub"><i class="fa-brands fa-github"></i></a>
+</div>
+</div>
+{{/if}}
