@@ -1,0 +1,172 @@
+paths:
+  /api/products/:
+      get:
+        summary: Obtiene todos los productos
+        tags: 
+         - Products
+        responses:
+          "200":
+            description: Los productos fueron devueltos satisfactoriamente
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref:'#components/schemas/Product'
+          '404':
+            description: No se pudo devolver el producto
+          '500':
+            description: Error del servidor
+      post:
+        summary: Crea un producto
+        tags: 
+         - Products
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#components/requestBodies/insertProduct'
+        responses:
+          '200':
+            description: Éxito, devuelve el producto creado
+          '404':
+            description: No se pudo crear el producto
+          '500':
+            description: Error del servidor
+      
+  /api/products/{pid}:
+      get:
+        summary: Obtiene un producto por ID
+        tags: 
+         - Products
+        parameters: 
+        - name: pid
+          in: path
+          required: true
+          description: Id del producto que se solicita
+          schema:
+            $type: String
+        responses:
+          '200':
+            description: Éxito, devuelve el producto por ID
+          '404':
+            description: Producto no encontrado
+          '500':
+            description: Error del servidor
+      put:
+        summary: Modifica un producto por ID
+        tags: 
+         - Products
+        parameters: 
+        - name: pid
+          in: path
+          required: true
+          description: Id del producto que se solicita
+          schema:
+            $type: String
+        responses:
+          '200':
+            description: Éxito, devuelve el producto actualizado
+          '404':
+            description: No se pudo actualizar el producto
+          '500':
+            description: Error del servidor
+      delete:
+        summary: Elimina un producto por ID
+        tags: 
+         - Products
+        parameters: 
+        - name: pid
+          in: path
+          required: true
+          description: Id del producto que se solicita
+          schema:
+            $type: String
+        responses:
+          '200':
+           description: Éxito, devuelve un mensaje de éxito
+          '404':
+            description: No se pudo eliminar el producto
+          '500':
+            description: Error del servidor
+  
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: ID auto generado por mongo
+        title:
+          type: string
+          description: El nombre del producto
+        description: 
+          type: String
+          description: Descripcion del producto
+        price:
+          type: Number
+          description: Precio del producto
+        thumbnails:
+          type: String
+          description: Imagen del producto
+        code:
+          type: Number
+          description: Codigo del producto
+        stock:
+          type: Number
+          description: Stock del producto
+        status:
+          type: Boolean
+          description: Estado activo o inactivos del producto
+        category:
+          type: String
+          description: Categoria del producto          
+      example:
+        _id: ObjectId("652acba407d8295adeab421d")
+        title: zapatillas adidas
+        description: Zapatillas unicas para todo andar
+        price: 30000
+        thumbnails: "https://www.moov.com.ar/on/demandware.static/-/Sites-dabra-catalog/default/dw7c433248/products/NI_DC5421-002/NI_DC5421-002-1.JPG"
+        code: 2
+        stock: 14
+        status: true
+        category: zapatillas
+  requestBodies:
+    insertProduct:
+      type: object
+      properties:
+        title:
+          type: string
+          description: El nombre del producto
+        description: 
+          type: String
+          description: Descripcion del producto
+        price:
+          type: Number
+          description: Precio del producto
+        thumbnails:
+          type: String
+          description: Imagen del producto
+        code:
+          type: Number
+          description: Codigo del producto
+        stock:
+          type: Number
+          description: Stock del producto
+        status:
+          type: Boolean
+          description: Estado activo o inactivos del producto
+        category:
+          type: String
+          description: Categoria del producto  
+      example:
+        title: zapatillas adidas
+        description: Zapatillas unicas para todo andar
+        price: 30000
+        thumbnails:
+        code: 2
+        stock: 14
+        status: true
+        category: zapatillas

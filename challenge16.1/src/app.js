@@ -33,23 +33,23 @@ initializePassport()
 app.use(passport.initialize())
 
 // Configurar handlebars
-app.engine('handlebars', handlebars.engine());
-app.set('views', __dirname + '/views')
-app.set('view engine', 'handlebars')
+// app.engine('handlebars', handlebars.engine());
+// app.set('views', __dirname + '/views')
+// app.set('view engine', 'handlebars')
 
 
 app.use('/api/products', productsRouter)
 app.use('/api/carts', cartsRouter)
 app.use('/api/tickets', ticketsRouter)
 app.use('/session', sessionRouter)
-app.use(errorHandler)
+//app.use(errorHandler)
 // Rutas para registro, inicio de sesión y cierre de sesión
-app.use('/api/session', authRouter);
+//app.use('/api/session', authRouter);
 // Rutas protegidas con JWT y roles
-app.use('/api/protected', protectedRouter);
-app.use('/auth', authRouter);
-app.use('/auth', resetPasswordRouter);
-app.use('/loggerTest', loggerTestRouter)
+//app.use('/api/protected', protectedRouter);
+//app.use('/auth', authRouter);
+//app.use('/auth', resetPasswordRouter);
+//app.use('/loggerTest', loggerTestRouter)
 const swaggerOptions = {
     definition: {
         openapi: '3.0.1',
