@@ -3,10 +3,10 @@ import productsModel from '../dao/mongo/models/product.model.js'
 
 const router = Router()
 
-router.get('/', async (req, res) => {
-    const products = await productsModel.find().lean()
-    res.render('products', { products })
-})
+// router.get('/', async (req, res) => {
+//     const products = await productsModel.find().lean()
+//     res.render('products', { products })
+// })
 
 router.get('/', async (req, res) => { 
     const limit = parseInt(req.query.limit) || 10; 

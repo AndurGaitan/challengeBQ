@@ -1,7 +1,7 @@
 import { generateToken } from '../utils.js'
 
 export const register = async (req, res) => {
-    res.json({ status: 'success' })
+    res.redirect('/api/session/login')
 }
 
 export const login = async (req, res) => {
@@ -22,6 +22,6 @@ export const privateUser = async (req, res) => {
 
 export const errorUser = async (req, res) => {
     res.json({
-        error: "Aqui esta el error"
+        error: true
     })
 }

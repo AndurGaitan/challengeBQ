@@ -10,9 +10,10 @@ export default class Product {
         }
     }
 
-    getById = async (id) => {
+    getById = async (pid) => {
         try{
-            const products = await ProductModel.findById(id)
+            console.log(pid)
+            const products = await ProductModel.findById(pid)
             return products
         } catch (error){
             throw new Error("Error al obtener los productos por ID", error.message)

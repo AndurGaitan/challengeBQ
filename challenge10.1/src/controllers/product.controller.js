@@ -4,8 +4,7 @@ const productService = new ProductService()
 
 export const getProducts = async(req, res) => {
         try {
-                const {page = 1, limit = 2, sort, query, category, avaible} = req.query;
-        
+                const {page = 1, limit = 10, sort, query, category, avaible} = req.query;
                 const options ={
                     page: parseInt(page),
                     limit: parseInt(limit),

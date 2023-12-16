@@ -33,4 +33,7 @@ removeAllProducts = async(cid) => {
 
 }
 
+purchaseCart = async(cid) => {
+    return await CartDao.purchaseCart(cid)
+}
 }

@@ -139,5 +139,17 @@ export const removeAllProducts = async(req, res) => {
 
 }
 
+export const purchaseCart = async (req, res) => {
+    const { cid } = req.params;
+
+    try {
+        const result = await cartService.purchaseCart(cid);
+
+        res.status(200).json({ message: 'Compra completada con éxito', result });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
 
 

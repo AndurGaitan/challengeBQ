@@ -9,13 +9,14 @@ import initializePassport from './config/passport.config.js'
 import passport from 'passport'
 import session from 'express-session'
 import handlebars from 'express-handlebars'
-//import viewRouter from './routes/view.router.js'
+import __dirname from './utils.js';
+import viewRouter from './routes/view.router.js'
 
 const app = express()
 app.use(express.json())
 app.use(express.urlencoded({extended: true}));
 
-//app.use(express.static(__dirname + '/public'))
+app.use(express.static(__dirname + '/public'))
 
 
 app.use(session({
@@ -27,16 +28,15 @@ app.use(session({
 initializePassport()
 app.use(passport.initialize())
 
-// Configurar handlebars
-// app.engine('handlebars', handlebars.engine());
-// app.set('views', __dirname + '/views')
-// app.set('view engine', 'handlebars')
+app.engine('handlebars', handlebars.engine());
+app.set('views', __dirname + '/views')
+app.set('view engine', 'handlebars')
 
 app.use('/api/products', productsRouter)
 app.use('/api/carts', cartsRouter)
 app.use('/api/tickets', ticketsRouter)
 app.use('/session', sessionRouter)
-//app.use(viewRouter)
+app.use(viewRouter)
 
 const httpServer = app.listen(8080, ()=> console.log('Servidor corriendo en el puerto 8080'));
 const io = new Server(httpServer)

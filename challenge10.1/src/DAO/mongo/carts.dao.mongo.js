@@ -150,4 +150,27 @@ export default class Cart {
         }
     }
 
+    purchaseCart = async (cartId) => {
+        // Lógica para finalizar el proceso de compra
+        const cart = await CartModel.findById(cartId).populate('products.product');
+
+        // Verificar el stock y restarlo si es suficiente
+        for (const item of cart.products) {
+            const availableStock = item.product.stock;
+            const requestedQuantity = item.quantity;
+
+            if (availableStock < requestedQuantity) {
+                throw new Error(`No hay suficiente stock para el producto ${item.product.name}`);
+            }
+
+            // Restar el stock
+            item.product.stock -= requestedQuantity;
+        }
+
+        // Guardar los cambios en el stock de los productos
+        await Promise.all(cart.products.map(item => item.product.save()));
+
+        return { cartId, message: 'Compra finalizada con éxito' };
+    };
+
 }

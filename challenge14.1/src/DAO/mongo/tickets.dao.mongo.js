@@ -21,6 +21,7 @@ export default class Ticket {
 
   getById = async(code) => {
     try {
+      console.log(code)
       return await TicketModel.findById(code);
     } catch (error) {
       throw error;
