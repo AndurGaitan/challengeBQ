@@ -5,6 +5,13 @@ const UserModel = mongoose.model('users', new mongoose.Schema({
     name: String,
     password: String,
     role: String,
+    documents: [
+        {
+        name: String,
+        reference: String
+        }
+    ],
+    last_connection: Date
 }))
 
 export default UserModel

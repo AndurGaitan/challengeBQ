@@ -10,6 +10,7 @@ import passport from 'passport'
 import session from 'express-session'
 import swaggerJsdoc from 'swagger-jsdoc'
 import swaggerUi from 'swagger-ui-express'
+import usersRouter from './routes/user.router.js'
 //import swaggerConfig from './config/swagger.config.js'
 import __dirname from './utils/index.js';
 import handlebars from 'express-handlebars'
@@ -33,14 +34,15 @@ initializePassport()
 app.use(passport.initialize())
 
 // Configurar handlebars
-// app.engine('handlebars', handlebars.engine());
-// app.set('views', __dirname + '/views')
-// app.set('view engine', 'handlebars')
+app.engine('handlebars', handlebars.engine());
+app.set('views', __dirname + '/views')
+app.set('view engine', 'handlebars')
 
 
 app.use('/api/products', productsRouter)
 app.use('/api/carts', cartsRouter)
 app.use('/api/tickets', ticketsRouter)
+app.use('api/users', usersRouter)
 app.use('/session', sessionRouter)
 //app.use(errorHandler)
 // Rutas para registro, inicio de sesión y cierre de sesión
