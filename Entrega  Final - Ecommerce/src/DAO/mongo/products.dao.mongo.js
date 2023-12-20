@@ -1,12 +1,22 @@
 import ProductModel from "./models/products.model.js";
 
 export default class Product {
-    get = async (limit, page, sort, query) => {
+    get = async ({limit, page, sort, query}) => {
         try {
+            const options = {
+                limit: parseInt(limit),
+                page: parseInt(page),
+                sort: sort === 'asc' ? { price: 1 } : sort === 'desc' ? { price: -1 } : undefined,
+              };
+
             const product = await ProductModel.paginate(query, options);
-            return product;
+            return {
+                products: product.docs,
+                totalCount: product.totalDocs,
+              }
         } catch (error) {
-            throw error
+            console.error('Error en el servicio ProductService:', error);
+            throw error;
         }
     }
 

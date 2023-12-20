@@ -63,3 +63,13 @@ export const uploadProductImage = (req, res) => {
         res.status(500).json({ error: 'Error al procesar la subida de la imagen del producto' });
     }
 };
+
+export const getAllUsers = async(req, res) => {
+    try{
+        const allUsers = await usersService.get();
+        res.status(200).json(allUsers)
+    } catch(error){
+        res.status(500).json({error: error.nessage})
+    }
+
+}

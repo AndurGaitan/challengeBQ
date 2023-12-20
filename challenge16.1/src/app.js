@@ -68,56 +68,60 @@ const swaggerSpec = swaggerJsdoc(swaggerOptions);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 //app.use(viewRouter)
 
-const httpServer = app.listen(8080, ()=> console.log('Servidor corriendo en el puerto 8080'));
-const io = new Server(httpServer)
-
-// Configurar socket del lado del servidor
-io.on('connection', async(socket)=> {
-    console.log(`Cliente nuevo conectado ${socket.id}`)
-
-// recibe el producto y lo guarda (mongo)
-    socket.on('new-product', async(newProduct)=> {
-        try {
-            const newProductCreated = await productMongo.addNewProducts(newProduct)
-            io.emit('product-created', newProductCreated)
-        } catch (error) {
-            console.error(`Error al crear el producto ${error}`)
-        }
-    })
-
-// Recibe el id del producto que quiere eliminar (mongo)
-    socket.on('deleteProduct', async(productId)=> {
-        try {
-        await productMongo.deleteProduct(productId)
-        io.emit('deleting-product', productId)
-        } catch (error) {
-            console.error(`Error al eliminar el producto ${error}`)
-        }
-    })
-    
-
-    // obtiene los mensjaes
-    try {
-        const messageData2 =  await messageManager.getAllMessagesChat()
-        io.emit('messagesLogs', messageData2)
-    } catch(error) {
-        console.error('Error al obtener los mensajes')
-    }
-
-    // obtiene los mensajes nuevos de los clientes
-    socket.on('message', async(data)=> {
-        const {user, message} = data
-        try {
-            await messageManager.addNewMessage(user, message)
-            const messageData = await messageManager.getAllMessagesChat()
-            io.emit('messagesLogs', messageData)
-        } catch (error) {
-            console.error('Error al guardar el mensaje')
-        }
-    })
-    
-    
-    io.emit('mensajeGeneral', 'Este es un mensaje para todos')
+app.listen(8080, () => {
+    console.log('Servidor escuchando en el puerto 8080')
 })
+
+// const httpServer = app.listen(8080, ()=> console.log('Servidor corriendo en el puerto 8080'));
+// const io = new Server(httpServer)
+
+// // Configurar socket del lado del servidor
+// io.on('connection', async(socket)=> {
+//     console.log(`Cliente nuevo conectado ${socket.id}`)
+
+// // recibe el producto y lo guarda (mongo)
+//     socket.on('new-product', async(newProduct)=> {
+//         try {
+//             const newProductCreated = await productMongo.addNewProducts(newProduct)
+//             io.emit('product-created', newProductCreated)
+//         } catch (error) {
+//             console.error(`Error al crear el producto ${error}`)
+//         }
+//     })
+
+// // Recibe el id del producto que quiere eliminar (mongo)
+//     socket.on('deleteProduct', async(productId)=> {
+//         try {
+//         await productMongo.deleteProduct(productId)
+//         io.emit('deleting-product', productId)
+//         } catch (error) {
+//             console.error(`Error al eliminar el producto ${error}`)
+//         }
+//     })
+    
+
+//     // obtiene los mensjaes
+//     try {
+//         const messageData2 =  await messageManager.getAllMessagesChat()
+//         io.emit('messagesLogs', messageData2)
+//     } catch(error) {
+//         console.error('Error al obtener los mensajes')
+//     }
+
+//     // obtiene los mensajes nuevos de los clientes
+//     socket.on('message', async(data)=> {
+//         const {user, message} = data
+//         try {
+//             await messageManager.addNewMessage(user, message)
+//             const messageData = await messageManager.getAllMessagesChat()
+//             io.emit('messagesLogs', messageData)
+//         } catch (error) {
+//             console.error('Error al guardar el mensaje')
+//         }
+//     })
+    
+    
+//     io.emit('mensajeGeneral', 'Este es un mensaje para todos')
+// })
 
 

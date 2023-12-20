@@ -1,4 +1,4 @@
- import mongoose from "mongoose";
+import mongoose from "mongoose";
 import { productCollection } from "../constants/constants.js";
 import mongoosePaginate from 'mongoose-paginate-v2'
 
@@ -31,12 +31,17 @@ const productSchema = new mongoose.Schema({
 
     status: {
         type: Boolean,
-        default: true, // El campo "status" tendrá valor "true" por defecto al crear un nuevo producto
+        default: true, 
     },
     category: {
         type: String,
         required: true
     },
+    owner:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'UserModel', 
+        required: true,
+    }
 
 })
 

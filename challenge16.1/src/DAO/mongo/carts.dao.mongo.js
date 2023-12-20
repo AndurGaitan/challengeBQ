@@ -35,9 +35,9 @@ export default class Cart {
         }
     }
 
-    createCart = async() => {
+    createCart = async(userId) => {
         try {
-            const newCart = new Cart({products: []})
+            const newCart = new CartModel({user: {_id:userId},products: []})
             const savedCart = await newCart.save();
             return savedCart;
         } catch (error) {

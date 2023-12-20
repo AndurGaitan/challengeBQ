@@ -4,7 +4,12 @@ const ProductDao = new Product()
 
 export default class ProductService {
     get = async(limit, page, sort, query) => {
-        return await ProductDao.get(limit, page, sort, query)
+    try{
+        return await ProductDao.get({limit, page, sort, query})
+    }catch(error){
+        console.error('Error en el servicio ProductService:', error);
+    throw error; 
+    }
     }
 
     getById = async(id) => {

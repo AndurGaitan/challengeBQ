@@ -8,21 +8,13 @@ const cartService = new CartService()
 
 export const getCartById = async(req, res) => {
     try {
-        const cid = req.params.cid
-        const getCartId = await cartService.getCartById(cid)
+        const cart =  await cartService.getCartById(req.params.cid) 
 
-        if(!getCartId){
+        if(!cart){
             res.status(404).json({error: 'Carrito no encontrado'})
         }
 
-        console.log(getCartId)
-
-        res.status(200).json({
-            status: 'Success',
-            getCartId
-        })
-
-        console.log(getCartId)
+        res.status(200).json({status: 'Success',cart})
 
     } catch (error) {
         if(error instanceof Error){
@@ -33,24 +25,23 @@ export const getCartById = async(req, res) => {
     }
 }
 
-export const createCart = async(req, res) => {
-    try {
-        const newCart =  await cartService.createCart();
-        logger.info('Carrito creado con exito');
-        res.status(201).json({
-            status: 'Success',
-            idCart: newCart._id})
+    export const createCart = async(req, res) => {
+        try {
+            const userId = req.params
+            const newCart =  await cartService.createCart(userId);
+            res.status(201).json({
+                status: 'Success',
+                idCart: newCart._id})
 
-    } catch (error) {
-        logger.error(`Error en cartService.createCart: ${error.message}`)
-        if(error instanceof Error) {
-            res.status(404).json({error: error.message})
-        } else {
-            res.status(500).json({error: 'Error al crear el carrito'})
+        } catch (error) {
+            if(error instanceof Error) {
+                res.status(404).json({error: error.message})
+            } else {
+                res.status(500).json({error: 'Error al crear el carrito'})
 
+            }
         }
     }
-}
 
 export const addProductToCart = async(req, res) => {
     try {

@@ -1,6 +1,6 @@
 import express from 'express';
 import multer from 'multer';
-import { uploadDocument, uploadProfilePhoto, uploadProductImage } from '../controllers/users.controller.js';
+import { uploadDocument, uploadProfilePhoto, uploadProductImage, getAllUsers } from '../controllers/user.controller.js'
 
 const router = express.Router();
 
@@ -23,7 +23,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-
+router.get('/', getAllUsers)
 router.post('/:uid/documents', upload.array('documents'), uploadDocument);
 router.post('/:uid/profilePhoto', upload.single('profilePhoto'), uploadProfilePhoto);
 router.post('/:uid/productImage', upload.single('productImage'), uploadProductImage);

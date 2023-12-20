@@ -8,8 +8,8 @@ getCartById = async(cid) => {
     return await CartDao.getById(cid)
 }
 
-createCart = async() => {
-    return await CartDao.createCart()
+createCart = async(userId) => {
+    return await CartDao.createCart(userId)
 }
 
 addProductToCart = async(cid, pid) => {

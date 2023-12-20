@@ -5,9 +5,10 @@ import { getCartById, createCart,addProductToCart, removeProductFromCart, update
 const router = Router()
 //Mostrar el carrito 
 router.get('/:cid', getCartById)
+
 //Crear el carrito 
 
-router.post('/', createCart)
+router.post('/:uid', createCart)
 
 //Agregar productos al arreglo products del carrito seleccionado
 router.post('/:cid/product/:pid', addProductToCart)
