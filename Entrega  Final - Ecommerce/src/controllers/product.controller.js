@@ -16,7 +16,7 @@ export const getProducts = async (req, res) => {
   
       const response = {
         status: 'success',
-        payload: result.payload, // Cambiado a result.payload en lugar de result.products
+        payload: result.products, 
         totalPages,
         prevPage: hasPrevPage ? page - 1 : null,
         nextPage: hasNextPage ? page + 1 : null,
@@ -68,7 +68,8 @@ export const updateProduct = async(req, res) => {
 }
 
 export const removeProduct = async(req, res) => {
-    const { id } = req.params
 
-    return res.json(await productService.remove(id))
+    const { pid } = req.params
+
+    return res.json(await productService.remove(pid))
 }

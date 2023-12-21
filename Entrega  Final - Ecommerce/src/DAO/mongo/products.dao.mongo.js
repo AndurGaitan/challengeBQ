@@ -22,9 +22,11 @@ export default class Product {
 
     getById = async (pid) => {
         try{
-            const products = await ProductModel.findById(pid)
+            const products = await ProductModel.findById(pid.pid)
+            console.log(products)
             return products
         } catch (error){
+            console.log(error)
             throw new Error("Error al obtener los productos por ID", error.message)
         }
     }
@@ -49,8 +51,12 @@ export default class Product {
 
     remove = async (id) => {
         try{
+            console.log(id)
+
             return await ProductModel.findByIdAndDelete(id)
-        } catch {
+        } catch(error) {
+
+            console.log(error)
             throw new Error(`Error al eliminar el producto ${id} ${error.message}`)
         }
        
