@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { register, login, privateUser, errorUser } from '../controllers/session.controller.js'
-import { passportJWT } from '../utils.js'
+//import { passportJWT } from '../utils.js'
 import passport from 'passport'
 
 const router = Router()
@@ -20,8 +20,8 @@ router.post(
     login
 )
 
-router.get('/private', passportJWT(), privateUser)
+//router.get('/private', passportJWT(), privateUser)
 
-router.get('/error', errorUser)
+//router.get('/error', errorUser)
 
 export default router

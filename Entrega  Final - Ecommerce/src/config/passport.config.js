@@ -3,6 +3,7 @@ import jwt from 'passport-jwt';
 import local from 'passport-local';
 import config from './config.js'
 import UserService from '../services/user.service.js'
+import { generateToken} from "../utils.js"
 
 const JWTStrategy = jwt.Strategy // La estrategia de JWT
 const ExtractJWT = jwt.ExtractJwt // La funcion de extraccion
@@ -26,7 +27,7 @@ const initializePassport = () => {
         const {email, name, role} = req.body
         console.log({email, name, role})
         try {
-            const user = await userService.getByEmail
+            const user = await userService.getByEmail(email)
             console.log({user})
             if(user) {
                 console.log('User already exits')
@@ -35,6 +36,14 @@ const initializePassport = () => {
 
             const newUser = { email, name, password, role }
             const result = await userService.create(newUser)
+            const access_token = generateToken(user)
+            console.log("hasta aqui", access_token)
+            
+            res.cookie('coderCookie', access_token, {
+                maxAge: 60*60*1000,
+                httpOnly: true
+            }).send({message: 'Logged In con cookie!'})
+
 
             return done(null, result)
         } catch (error) {
@@ -72,6 +81,15 @@ const initializePassport = () => {
                 }
             })
     )
+
+    passport.serializeUser((user, done) => {
+        done(null, user?.id ?? user._id)
+    })
+
+    passport.deserializeUser(async (id, done) => {
+        const user = await userService.getById(id)
+        done(null, user )
+    })
 
 }
 

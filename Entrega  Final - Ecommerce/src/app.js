@@ -2,6 +2,7 @@ import express from 'express'
 import handlebars from 'express-handlebars'
 import productsRouter from './routes/product.router.js'
 import cartsRouter from './routes/cart.router.js'
+import sessionRouter from './routes/session.router.js'
 import viewRouter from './routes/views.router.js'
 import __dirname from './utils.js'
 import cookieParser from 'cookie-parser'
@@ -33,7 +34,8 @@ initializePassport()
 
 app.use('/api/products', productsRouter)
 app.use('/api/carts', cartsRouter)
-app.use('/jwt', jwtRouter)
+app.use('/', sessionRouter)
+//app.use('/jwt', jwtRouter)
 app.use(viewsRouter)
 
 app.listen(8080, () => {
