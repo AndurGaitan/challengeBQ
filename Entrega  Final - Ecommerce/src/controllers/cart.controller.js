@@ -1,6 +1,5 @@
-import CartService from '../services/cart.services.js'
+import CartService from '../services/cart.service.js'
 import ProductService from "../services/product.services.js";
-import logger from '../logger/logger.js'
 
 const productService = new ProductService()
 
@@ -45,7 +44,7 @@ export const getCartById = async(req, res) => {
 
 export const addProductToCart = async(req, res) => {
     try {
-        const cid = req.params.cid
+        const cid = req.params.cid 
         const pid = req.params.pid
         const updateCart = await cartService.addProductToCart(cid, pid)
 
