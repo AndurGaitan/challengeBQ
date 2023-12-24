@@ -5,7 +5,7 @@ import { productCollection } from "../constants/constants.js";
 const cartSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'UserModel', // Asegúrate de que 'User' sea el nombre correcto de tu modelo de usuario
+        ref: 'users', 
         required: true,
     },
     products: [

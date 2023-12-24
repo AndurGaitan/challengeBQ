@@ -1,3 +1,4 @@
+import { chdir } from 'process';
 import CartService from '../services/cart.service.js'
 import ProductService from "../services/product.services.js";
 
@@ -85,7 +86,7 @@ export const updateCart = async(req, res) => {
     try {
         const cid = req.params.cid;
         const updateProducts = req.body;
-
+        console.log(updateProducts)
         const updateCart = await cartService.updateCart(cid, updateProducts);
         res.status(200).json({message: `Carrito ${cid} se actualizo correctament`, updateCart});
 

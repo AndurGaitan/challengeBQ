@@ -46,20 +46,19 @@ export default class Cart {
         }
     }
 
-    addProductToCart = async(idCart, idProduct) => {
+    addProductToCart = async(cid, pid) => {
         try {
+            const cart = await CartModel.findById(cid)
+            if(!cart) throw new Error(`Carrito ${cid} no encontrado`)
 
-            const cart = await CartModel.findById(idCart)
-            if(!cart) throw new Error(`Carrito ${idCart} no encontrado`)
+            const product = await ProductModel.findById(pid)
+            if(!product) throw new Error(`Producto ${pid} no encontrado `)
 
-            const product = await ProductModel.findById(idProduct)
-            if(!product) throw new Error(`Producto ${idProduct} no encontrado `)
-
-            const existignProductIndex = cart.products.findIndex(item=> item.product.equals(idProduct))
+            const existignProductIndex = cart.products.findIndex(item=> item.product.equals(pid))
             if(existignProductIndex !== -1){
                 cart.products[existignProductIndex].quantity +=1;
             } else {
-                cart.products.push({product: idProduct, quantity: 1})
+                cart.products.push({product: pid, quantity: 1})
             }
 
             await cart.save();
@@ -100,11 +99,13 @@ export default class Cart {
         try {
 
             const cart = await CartModel.findById(cartid);
+            console.log(cart)
             if(!cart) {
                 throw new Error(`El carrito ${cartid} no existe`);
             }
+            console.log("desde el cartMongo", updateProductsCart)
 
-            cart.products = updateProductsCart;
+            cart.products.product = updateProductsCart;
             await cart.save();
             return cart
 
