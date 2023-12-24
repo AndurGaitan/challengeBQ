@@ -26,7 +26,8 @@ export const getCartById = async(req, res) => {
 
     export const createCart = async(req, res) => {
         try {
-            const userId = req.params
+            const userId = req.params.uid
+            console.log(userId)
             const newCart =  await cartService.createCart(userId);
             res.status(201).json({
                 status: 'Success',
