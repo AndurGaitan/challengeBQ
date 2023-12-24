@@ -1,0 +1,48 @@
+<h1>bienvenido {{name}}</h1>
+<a href="/api/session/logout">LOGOUT</a>
+<h1>Productos</h1> 
+<div class="row">
+{{#each products}}
+<div class="col-sm">
+<div class="card" style="width: 18rem;">
+  <img src="{{this.thumbnails}}" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">{{this.title}}</h5>
+    <p class="card-text">{{this.description}}</p>
+    <p class="card-text">{{this.price}}</p>  
+    <button class="btn btn-primary" onclick="addToCart('{{_id}}')">Agregar al carrito</button>   
+    <button class="delete btn btn-danger">x</button>
+  </div>
+</div>
+</div>
+{{/each}}
+
+</div>
+
+<script>
+  function addToCart(productId) {
+  // Enviar una solicitud POST al servidor para agregar el producto al carrito
+  fetch(`/api/carts/${cartId}/products`, {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ productId }) // Enviar el ID del producto en el cuerpo de la solicitud
+  })
+  .then(response => response.json()) // Convertir la respuesta a JSON
+  .then(data => {
+      if (data.status === 'success') {
+          // Si el producto se agregó correctamente, mostrar un mensaje de éxito
+          alert('Producto agregado al carrito');
+      } else {
+          // Si hubo un error al agregar el producto, mostrar un mensaje de error
+          alert('Hubo un error al agregar el producto al carrito');
+      }
+  })
+  .catch(error => {
+      // Capturar y manejar errores en caso de problemas con la solicitud
+      console.error('Error:', error);
+      alert('Hubo un error al agregar el producto al carrito');
+  });
+}
+</script>

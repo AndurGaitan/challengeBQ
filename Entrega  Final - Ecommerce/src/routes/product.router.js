@@ -7,7 +7,7 @@ router.get('/', getProducts)
 router.get('/:pid',getProductById)
 router.post('/', createProduct)
 router.put('/:pid', updateProduct)
-router.delete('/:pid',removeProduct)
+router.delete('/:pid',removeProduct) //Agregar el Auth('admin')
 
 export default router
 

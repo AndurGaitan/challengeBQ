@@ -17,14 +17,14 @@ switch (config.persistence) {
             .then(() => console.log('DB connected'))
             .catch((e) => {throw 'DB can not connected'})
 
-        //const { default: UserMongo } = await import('./mongo/user.dao.mongo.js')
+        const { default: UserMongo } = await import('./mongo/users.dao.mongo.js')
         const { default: ProductMongo } = await import('./mongo/products.dao.mongo.js')
-        //const { default: CartMongo } = await import('./mongo/carts.dao.mongo.js')
+        const { default: CartMongo } = await import('./mongo/cart.dao.mongo.js')
         //const { default: TicketMongo } = await import('./mongo/tickets.dao.mongo.js')
 
-        //User = UserMongo
+        User = UserMongo
         Product = ProductMongo
-        //Cart = CartMongo
+        Cart = CartMongo
         //Ticket = TicketMongo
 
         break;

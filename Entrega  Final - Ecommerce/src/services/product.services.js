@@ -29,7 +29,6 @@ export default class ProductService {
     }
 
     remove = async(pid) => {
-        console.log("product..seerviicee", pid)
         return await ProductDao.remove(pid)
     }
 }

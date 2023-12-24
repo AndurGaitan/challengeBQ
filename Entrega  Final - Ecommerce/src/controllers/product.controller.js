@@ -49,12 +49,10 @@ export const getProductById = async(req, res) => {
 export const createProduct = async(req, res) => {
     try{
         const object = req.body
-        logger.info('Producto creado con exito')
 
         return res.json(await productService.create(object))
     } catch(error) {
-        logger.error(`Error en productService.create ${error.message}`)
-        next(error);
+        console.error(`Error en productService.create ${error.message}`)
     }
     
 }
