@@ -1,4 +1,74 @@
-<form id='form'>
+<div class="container w-75 mt-5 rounded shadow">
+    <div class="row aling-items-stretch">
+        <div class="col bg d-none d-lg-block col-md-5 col-lg-5 col-xl-6 rounded">
+
+        </div>
+        <div class="col bg-white p-5 rounded-end">
+            <div class="text-end">
+                <img src="" alt="" width="48">
+            </div>
+            <h2 class="fw-bold text-center py-5">Bienvenido</h2>
+            <form action="/api/session/login" method="post">
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Email address</label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email">
+                    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="exampleInputPassword1" name="password">
+                </div>
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary">LOGIN</button>
+                </div>
+                <div class="my-3">
+                    <div class="d-grid">
+                    <button class="btn btn-secondary">
+                        <a action="/api/session/register">REGISTER</a>
+                    </button>
+                    </div>
+                </div>
+                </form>
+                <div class="container w-100 my-5">
+                    <div class="row text-center">
+                        <div class="col-12">INICIAR SESION</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <button class="btn btn-outline-danger w-100 my-1">
+                                    <div class="row aling-items-center">
+                                        <div class="col-2">
+                                            <img src="static/google_8.png" width="24">
+                                        </div>
+                                        <div class="col-10">
+                                            Google
+                                        </div>
+                                    </div>
+                            </button>
+                        </div>
+                        <div class="col">
+                            <button class="btn btn-outline-primary w-100 my-1">
+                                    <div class="row aling-items-center">
+                                        <div class="col-2">
+                                            <img src="static/github_7.png" width="24">
+                                        </div>
+                                        <div class="col-10">
+                                            GitHub
+                                        </div>
+                                    </div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="my-3">
+                    <span>login GIT HUB<a href="/api/session/login-github">GIT HUB</a></span>
+                </div>
+
+        </div>
+</div>
+
+
+{{!-- <form id='form'>
     posta:
     Email: <input name="email" id="email" type="text"><br>
     Pass: <input name="password" id="password" type="text"><br>
@@ -23,4 +93,4 @@
                 console.log(data)
             })
     }
-</script>
+</script> --}}
