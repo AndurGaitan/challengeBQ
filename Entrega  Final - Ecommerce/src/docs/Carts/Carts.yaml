@@ -1,0 +1,166 @@
+paths:
+  /api/carts/{cid}:
+    get:
+      summary: Obtiene un carrito por ID
+      tags:
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: ID del carrito
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Éxito, devuelve el carrito por ID
+        '404':
+          description: Carrito no encontrado
+        '500':
+          description: Error del servidor
+
+    put:
+      summary: Actualiza un carrito por ID
+      tags:
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: ID del carrito
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Éxito, devuelve el carrito actualizado
+        '404':
+          description: No se pudo actualizar el carrito
+        '500':
+          description: Error del servidor
+
+    delete:
+      summary: Elimina un carrito por ID
+      tags:
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: ID del carrito
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Éxito, devuelve un mensaje de éxito
+        '404':
+          description: No se pudo eliminar el carrito
+        '500':
+          description: Error del servidor
+
+  /api/carts/{uid}:
+    post:
+      summary: Crea un carrito para un usuario
+      tags:
+        - Carts
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          description: ID del usuario
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Éxito, devuelve el ID del carrito creado
+        '404':
+          description: No se pudo crear el carrito
+        '500':
+          description: Error del servidor
+
+  /api/carts/{cid}/product/{pid}:
+    post:
+      summary: Añade un producto al carrito
+      tags:
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: ID del carrito
+          schema:
+            type: string
+        - name: pid
+          in: path
+          required: true
+          description: ID del producto
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Éxito, devuelve el carrito actualizado con el producto
+        '404':
+          description: No se pudo añadir el producto al carrito
+        '500':
+          description: Error del servidor
+
+    delete:
+      summary: Elimina un producto del carrito
+      tags:
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: ID del carrito
+          schema:
+            type: string
+        - name: pid
+          in: path
+          required: true
+          description: ID del producto
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Éxito, devuelve el carrito actualizado sin el producto
+        '404':
+          description: No se pudo eliminar el producto del carrito
+        '500':
+          description: Error del servidor
+
+    put:
+      summary: Actualiza la cantidad de un producto en el carrito
+      tags:
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: ID del carrito
+          schema:
+            type: string
+        - name: pid
+          in: path
+          required: true
+          description: ID del producto
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                quantity:
+                  type: integer
+                  description: Nueva cantidad del producto en el carrito
+              required:
+                - quantity
+      responses:
+        '200':
+          description: Éxito, devuelve el carrito actualizado con la nueva cantidad
+        '404':
+          description: No se pudo actualizar la cantidad del producto en el carrito
+        '500':
+          description: Error del servidor

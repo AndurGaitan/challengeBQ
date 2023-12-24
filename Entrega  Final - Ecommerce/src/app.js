@@ -12,6 +12,9 @@ import viewsRouter from './routes/views.router.js'
 import initializePassport from './config/passport.config.js'
 import jwtRouter from './routes/jwt.router.js'
 import session from 'express-session'
+import swaggerJsdoc from 'swagger-jsdoc'
+import swaggerUi from 'swagger-ui-express'
+
 
 const app = express()
 app.use(express.urlencoded({extended: true}))
@@ -37,6 +40,22 @@ app.use('/api/carts', cartsRouter)
 app.use('/', sessionRouter)
 //app.use('/jwt', jwtRouter)
 app.use(viewsRouter)
+
+const swaggerOptions = {
+    definition: {
+        openapi: '3.0.1',
+        info: {
+            title: 'Documentacion de Ecommerce-MyShoes',
+            description: 'Ecommerce de zapatillas'
+        }
+    },
+    apis: [`${__dirname}/./docs/**/*.yaml`]
+}
+
+// Configuración de Swagger
+const swaggerSpec = swaggerJsdoc(swaggerOptions);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
 
 app.listen(8080, () => {
     console.log('Servidor escuchando en el puerto 8080')
