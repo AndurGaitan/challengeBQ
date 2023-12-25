@@ -32,7 +32,7 @@ export const deleteInactiveUsers = async (req, res) => {
   
       inactiveUsers.forEach(async (user) => {
         const mailOptions = {
-          to: user.correo,
+          to: user.email,
           subject: 'Cuenta eliminada por inactividad',
           text: 'Tu cuenta ha sido eliminada por inactividad durante los últimos 2 días.',
         };

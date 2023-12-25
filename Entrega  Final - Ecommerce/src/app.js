@@ -36,8 +36,14 @@ app.use(session({
 }))
 
 app.use(cookieParser());
-app.use(passport.initialize())
+app.use(session({
+    secret: 'mysecret',
+    resave: true,
+    saveUninitialized: true
+}) )
 initializePassport()
+app.use(passport.initialize())
+app.use(passport.session())
 
 app.use('/api/products', productsRouter)
 app.use('/api/carts', cartsRouter)

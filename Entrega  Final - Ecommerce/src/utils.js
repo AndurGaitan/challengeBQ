@@ -14,18 +14,21 @@ export const createHash = (password) => {
 }
 
 export const isValidPassword = (user, password) => {
-    return bcrypt.compareSync(password, user.password) // true o false
+    return bcrypt.compareSync(password, user.password) 
 }
 
-// JWT Generamos el token
 export const generateToken = (user) => {
-    const token = jwt.sign( {user}, PRIVATE_KEY, {expiresIn: '24h'})
+    const token = jwt.sign( {user}, PRIVATE_KEY, {expiresIn: '24h'}) 
 
     return token
 }
 
-// JWT Extraemos el token del header
-export const authToken = (req, res, next) => {
+export const extractCookie = req => {
+    return (req && req.cookies) ? req.cookies['keyCookieForJWT'] : null
+}
+
+
+export const authToken = (req, res, next) => { //medleware para autenticar el token 
 
     // Buscamos el token en el header o en la cookie
     let authHeader = req.headers.auth

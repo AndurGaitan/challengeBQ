@@ -5,9 +5,7 @@ import passport from 'passport'
 
 const router = Router()
 
-router.get('/', (req, res) => {
-    res.render('home', {})
-})
+router.get('/', (req, res) => {res.render('home', {})})
 
 router.get('/login', (req, res) => {
     res.render('login', {})
@@ -15,6 +13,15 @@ router.get('/login', (req, res) => {
 router.get('/register', ( req,res) => {
     res.render('register', {})
 })
+
+router.get('/githubcallback',
+    passport.authenticate('github', { failureRedirect: '/fail-github' }),
+    (req, res) => {
+        console.log('Callback:', req.user)
+
+        res.cookie('keyCookieForJWT', req.user.token).redirect('/home')
+    }
+)
 
 router.post(
     '/register',

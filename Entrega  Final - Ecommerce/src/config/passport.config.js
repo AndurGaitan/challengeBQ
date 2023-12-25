@@ -3,22 +3,64 @@ import jwt from 'passport-jwt';
 import local from 'passport-local';
 import config from './config.js'
 import UserService from '../services/user.service.js'
-import { generateToken} from "../utils.js"
+import { extractCookie, generateToken} from "../utils.js"
+import passportJWT from 'passport-jwt'
+import GithubStrategy from 'passport-github2'
 
-const JWTStrategy = jwt.Strategy // La estrategia de JWT
-const ExtractJWT = jwt.ExtractJwt // La funcion de extraccion
+const JWTStrategy = jwt.Strategy 
+const ExtractJWT = jwt.ExtractJwt 
 const LocalStrategy = local.Strategy
 const userService = new UserService()
 
-const cookieExtractor = req => {
-    const token = (req?.cookies) ? req.cookies['coderCookie'] : null
+// const cookieExtractor = req => {
+//     const token = (req?.cookies) ? req.cookies['coderCookie'] : null
 
-    console.log('COOKIE EXTRACTOR: ', token)
-    return token
-}
+//     console.log('COOKIE EXTRACTOR: ', token)
+//     return token
+// }
 
 
 const initializePassport = () => {
+
+    passport.use('github', new GithubStrategy(
+        {
+            clientID: config.clientId,
+            clientSecret: config.clientSecret,
+            callbackURL: config.callbackUrl
+        },
+        async (accessToken, refreshToken, profile, done) => { 
+            console.log(profile)
+            
+            try {
+                const email = profile._json.email
+                console.log( { email })
+                const user = await userService.getByEmail({ email }).lean().exec()
+                if(user) {
+                    console.log('User already exits!!')
+                } else {
+                    console.log(`User doesn't exits. So register them`)
+
+                    const newUser = {
+                        name: profile._json.name,
+                        email,
+                        password: '',
+                        social: 'github',
+                        role: 'user'
+                    }
+                    const result = await userService.create(newUser)
+                    console.log(result)
+                }
+
+                const token = generateToken(user)
+                user.token = token
+
+                return done(null, user)
+
+            } catch (e) {
+                return done('Error to login with github' + e) 
+            }
+        }
+    ))
 
     passport.use('register', new LocalStrategy({
         passReqToCallback: true,
@@ -69,10 +111,11 @@ const initializePassport = () => {
         'jwt',
         new JWTStrategy(
             {
-                jwtFromRequest: ExtractJWT.fromExtractors([cookieExtractor]),
+                jwtFromRequest: ExtractJWT.fromExtractors([extractCookie]),
                 secretOrKey: 'coderTokenForJWT'
             },
             async (jwt_payload, done) => {
+                console.log({jwt_payload})
 
                 try {
                     return done(null, jwt_payload)

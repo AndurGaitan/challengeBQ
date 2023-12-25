@@ -10,5 +10,8 @@ export default {
     jwtPrivateKEY: process.env.JWT_PRIVATE_KEY,
     privateKeyPayment: process.env.PRIVATE_KEY,
     gmailKey: process.env.GMAIL_KEY,
-    gmail: process.env.GMAIL
+    gmail: process.env.GMAIL,
+    clientId:process.env.CLIENT_ID,
+    clientSecret: process.env.CLIENT_SECRET,
+    callbackUrl: process.env.CALLBACK_URL
 }
