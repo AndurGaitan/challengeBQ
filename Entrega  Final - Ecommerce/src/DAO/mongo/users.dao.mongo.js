@@ -19,6 +19,6 @@ export default class User {
     }
 
     getByEmail = async(email) => {
-        return await UserModel.findOne({ email })
+        return await UserModel.findOne({ email }).lean().exec()
     }
 }

@@ -23,6 +23,7 @@ app.use(express.urlencoded({extended: true}))
 app.use(express.json())
 
 app.use('/static', express.static( __dirname + '/public'))
+
 app.engine('handlebars', handlebars.engine())
 app.set('views', __dirname + '/views')
 app.set('view engine', 'handlebars')
@@ -63,7 +64,7 @@ const swaggerOptions = {
     apis: [`${__dirname}/./docs/**/*.yaml`]
 }
 
-// Configuración de Swagger
+
 const swaggerSpec = swaggerJsdoc(swaggerOptions);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 

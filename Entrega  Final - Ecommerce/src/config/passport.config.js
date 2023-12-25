@@ -32,9 +32,12 @@ const initializePassport = () => {
             console.log(profile)
             
             try {
-                const email = profile._json.email
+                const email = profile._json.email || null;
+                if(!email){
+                    return done('Correo electrónico no disponible en el perfil de GitHub');
+                }
                 console.log( { email })
-                const user = await userService.getByEmail({ email }).lean().exec()
+                const user = await userService.getByEmail( email )
                 if(user) {
                     console.log('User already exits!!')
                 } else {

@@ -1,7 +1,19 @@
 
 import { Router } from "express";
 
+
 const router = Router()
+
+
+router.get('/home', async(req, res)=> {
+    try {
+        const productsMongo = await productService.get();
+        console.log(productsMongo)
+        res.render('home', {productsMongo, style: 'home.css'})
+    } catch (error) {
+        res.status(500).send('Error al obtener todos los productos')
+    }
+})
 
 router.get('/', (req, res) => {
     res.render('login', {})
