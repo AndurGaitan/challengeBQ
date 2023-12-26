@@ -49,7 +49,7 @@ app.use(passport.session())
 app.use('/api/products', productsRouter)
 app.use('/api/carts', cartsRouter)
 app.use('/api/payments', paymentRouter)
-app.use('/', sessionRouter)
+app.use('/api/session', sessionRouter)
 //app.use('/jwt', jwtRouter)
 app.use(viewsRouter)
 

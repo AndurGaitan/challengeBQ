@@ -1,8 +1,14 @@
 import { generateToken } from '../utils.js'
 
 export const register = async (req, res) => {
-    res.json({ status: 'success' })
-}
+        const { token, ...userWithoutToken } = req.user;
+
+        res.cookie('coderCookie', token, {
+            maxAge: 60 * 60 * 1000, 
+            httpOnly: true
+        });
+        res.status(200).json({ message: 'Registro exitoso', user: userWithoutToken });
+    }
 
 export const login = async (req, res) => {
     if (!req.user) {

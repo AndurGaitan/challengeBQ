@@ -3,7 +3,7 @@ import jwt from 'passport-jwt';
 import local from 'passport-local';
 import config from './config.js'
 import UserService from '../services/user.service.js'
-import { extractCookie, generateToken} from "../utils.js"
+import { extractCookie, generateToken, createHash} from "../utils.js"
 import passportJWT from 'passport-jwt'
 import GithubStrategy from 'passport-github2'
 
@@ -36,7 +36,6 @@ const initializePassport = () => {
                 if(!email){
                     return done('Correo electrónico no disponible en el perfil de GitHub');
                 }
-                console.log( { email })
                 const user = await userService.getByEmail( email )
                 if(user) {
                     console.log('User already exits!!')
@@ -65,36 +64,72 @@ const initializePassport = () => {
         }
     ))
 
-    passport.use('register', new LocalStrategy({
-        passReqToCallback: true,
-        usernameField: 'email'
-    }, async(req, username, password, done) => {
-        const {email, name, role} = req.body
-        console.log({email, name, role})
-        try {
-            const user = await userService.getByEmail(email)
-            console.log({user})
-            if(user) {
-                console.log('User already exits')
-                return done(null, false)
+    passport.use('register', new LocalStrategy(
+        {
+            usernameField: 'email',
+            passwordField: 'password',
+            passReqToCallback: true
+        },
+        async (req, email, password, done) => {
+            try {
+                const existingUser = await userService.getByEmail(email);
+    
+                if (existingUser) {
+                    return done(null, false, { message: 'El correo electrónico ya está registrado.' });
+                }
+    
+                const newUser = {
+                    name: req.body.name,
+                    email,
+                    password: await createHash(password, 10), 
+                    role: 'user'
+                };
+                console.log(newUser)
+    
+                const createdUser = await userService.create(newUser);
+                const token = generateToken(createdUser);
+    
+                createdUser.token = token;
+    
+                return done(null, createdUser);
+    
+            } catch (error) {
+                return done(error);
             }
-
-            const newUser = { email, name, password, role }
-            const result = await userService.create(newUser)
-            const access_token = generateToken(user)
-            console.log("hasta aqui", access_token)
-            
-            res.cookie('coderCookie', access_token, {
-                maxAge: 60*60*1000,
-                httpOnly: true
-            }).send({message: 'Logged In con cookie!'})
-
-
-            return done(null, result)
-        } catch (error) {
-            return done('[LOCAL] Error from register user')
         }
-    }))
+    ));
+
+    // passport.use('register', new LocalStrategy({
+    //     passReqToCallback: true,
+    //     usernameField: 'email',
+    //     passwordField: 'password'
+    // }, async(req, username, password, done) => {
+    //     const {email, name, role} = req.body
+    //     console.log({email, name, role})
+    //     try {
+    //         const user = await userService.getByEmail(email)
+    //         console.log({user})
+    //         if(user) {
+    //             console.log('User already exits')
+    //             return done(null, false)
+    //         }
+
+    //         const newUser = { email, name, password, role }
+    //         const result = await userService.create(newUser)
+    //         const access_token = generateToken(user)
+    //         console.log("hasta aqui", access_token)
+            
+    //         res.cookie('coderCookie', access_token, {
+    //             maxAge: 60*60*1000,
+    //             httpOnly: true
+    //         }).send({message: 'Logged In con cookie!'})
+
+
+    //         return done(null, result)
+    //     } catch (error) {
+    //         return done('[LOCAL] Error from register user')
+    //     }
+    // }))
 
     passport.use('login', new LocalStrategy({
         usernameField: 'email'
